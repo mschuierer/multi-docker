@@ -1,20 +1,19 @@
 sudo: required
-
 services: 
-    - docker 
+ - docker 
 
 before_install:
-    - docker build - t schuimax/react-test -f ./client/Dockerfile.dev ./client
+ - docker build - t schuimax/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run -e CI=true schuimax/react-test npm test
+ - docker run -e CI=true schuimax/react-test npm test
 
   
 after_success:
-    - docker build -t schuimax/multi-client ./client
-    - docker build -t schuimax/multi-nginx ./nginx
-    - docker build -t schuimax/multi-server ./server
-    - docker build -t schuimax/multi-worker ./worker
+ - docker build -t schuimax/multi-client ./client
+ - docker build -t schuimax/multi-nginx ./nginx
+ - docker build -t schuimax/multi-server ./server
+ - docker build -t schuimax/multi-worker ./worker
 
 - echo "$DOCKER_PASSWORD" | docker login -u "$_DOCKER_ID" --password-stdin
  
